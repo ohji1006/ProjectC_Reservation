@@ -13,17 +13,18 @@ import kr.or.connect.reservation.dto.Category;
 import kr.or.connect.reservation.service.CategoryService;
 
 @RestController
-@RequestMapping(path="/api/categories")
+@RequestMapping(path = "/api/categories")
 public class CategoryApiController {
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@GetMapping
-	public Map<String, Object> getCategory(){
+	public Map<String, Object> getCategoryItems() {
 		List<Category> categoryList = categoryService.getCategoryList();
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("items", categoryList);
+
 		return map;
 	}
 }
