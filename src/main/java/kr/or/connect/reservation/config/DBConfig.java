@@ -1,7 +1,5 @@
 package kr.or.connect.reservation.config;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -18,22 +16,16 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class DBConfig implements TransactionManagementConfigurer {
-//	@Value("${spring.datasource.driver-class-name}")
-//	private String driverClassName;
-//	@Value("${spring.datasource.url}")
-//	private String url;
-//	@Value("${spring.datasource.username}")
-//	private String username;
-//	@Value("${spring.datasource.password}")
-//	private String password;
 
-	@Value("${spring.datasource.driver-class-name}")	
+	@Value("${spring.datasource.driver-class-name}")
 	private String driverClassName;
-//	private String driverClassName = "com.mysql.cj.jdbc.Driver";
-	private String url = "jdbc:mysql://localhost:3306/connectdb?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8";
-	private String username = "connectuser";
-	private String password = "connect123!@#";
-	
+	@Value("${spring.datasource.url}")
+	private String url;
+	@Value("${spring.datasource.username}")
+	private String username;
+	@Value("${spring.datasource.password}")
+	private String password;
+
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
