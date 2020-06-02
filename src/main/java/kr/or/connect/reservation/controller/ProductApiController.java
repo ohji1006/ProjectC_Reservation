@@ -35,17 +35,17 @@ public class ProductApiController {
 	}
 
 	@GetMapping
-	public Map<String, Object> getProduct(@RequestParam(defaultValue = "0", name = "categoryId") long categoryId,
-			@RequestParam(defaultValue = "0", name = "start") long start) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, Object> getProduct(@RequestParam(defaultValue = "0") long categoryId,
+			@RequestParam(defaultValue = "0") long start) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("totalCount", getProductCount(categoryId));
 		map.put("items", getProductList(categoryId, start));
 		return map;
 	}
 
 	@GetMapping(path = "/{displayInfoId}")
-	public Map<String, Object> testDisplayInfoId(@PathVariable(name = "displayInfoId") long displayInfoId) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, Object> testDisplayInfoId(@PathVariable long displayInfoId) {
+		Map<String, Object> map = new HashMap<>();
 		map.put("displayInfoId", displayInfoId);
 
 		return null;

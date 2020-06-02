@@ -1,13 +1,10 @@
 package kr.or.connect.reservation.dao;
 
 public class CategorySql {
-	public final static String SELECT_ALL_WITH_COUNT = "select category.id, category.name, product.count "
+	public final static String SELECT_ALL_WITH_COUNT = 
+			"select category.id, category.name, count(*) as count "
 			+ "from category "
-			+ "join "
-			+ "("
-			+ "select category_id, COUNT(*) as count "
-			+ "from product "
-			+ "group by category_id"
-			+ ") as product "
-			+ "on category.id = product.category_id";
+			+ "join product as pr on category.id = pr.category_id "
+			+ "join display_info on pr.id = display_info.product_id "
+			+ "group by category.id, category.name";
 }
