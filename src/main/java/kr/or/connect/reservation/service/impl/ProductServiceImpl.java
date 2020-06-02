@@ -17,25 +17,21 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDao poductDao;
 
 	@Override
-	@Transactional
 	public long getProductCount() {
 		return poductDao.selectCount();
 	}
 
 	@Override
-	@Transactional
 	public long getProductCountAtCategory(long categoryId) {
 		return poductDao.selectCountAtCategory(categoryId);
 	}
 
 	@Override
-	@Transactional
 	public List<Product> getProductList(long start) {
 		return poductDao.selectAll(start, SELECT_COUNT_LIMIT);
 	}
 
 	@Override
-	@Transactional
 	public List<Product> getProductListAtCategory(long categoryId, long start) {
 		return poductDao.selectAllAtCategory(categoryId, start, SELECT_COUNT_LIMIT);
 	}
