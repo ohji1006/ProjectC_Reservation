@@ -7,6 +7,21 @@ public class Product {
 	private String placeName;
 	private String productContent;
 	private String productImageUrl;
+	
+	public Product() {
+		super();
+	}
+
+	public Product(Long displayInfoId, Long productId, String productDescription, String placeName,
+			String productContent, String productImageUrl) {
+		super();
+		this.displayInfoId = displayInfoId;
+		this.productId = productId;
+		this.productDescription = productDescription;
+		this.placeName = placeName;
+		this.productContent = productContent;
+		this.productImageUrl = productImageUrl;
+	}
 
 	public Long getDisplayInfoId() {
 		return displayInfoId;
@@ -58,7 +73,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product\n[\ndisplayInfoId=" + displayInfoId + ", productId=" + productId + ", productDescription"
+		return "Product\n[\ndisplayInfoId=" + displayInfoId + ", productId=" + productId + ", productDescription="
 				+ productDescription + "\n, placeName=" + placeName + "\n, productContent=" + productContent
 				+ "\n, productImageUrl=" + productImageUrl + "\n]";
 	}

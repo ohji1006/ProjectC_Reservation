@@ -19,7 +19,6 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter{
 
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		// TODO Auto-generated method stub
 		configurer.enable();
 	}
 
