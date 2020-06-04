@@ -5,6 +5,17 @@ public class Category {
 	private String name;
 	private int count;
 
+	public Category() {
+		super();
+	}
+
+	public Category(long id, String name, int count) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.count = count;
+	}
+
 	public long getId() {
 		return id;
 	}

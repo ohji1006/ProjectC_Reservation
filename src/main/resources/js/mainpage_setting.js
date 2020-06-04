@@ -16,7 +16,6 @@ function initMainPage() {
 
 function addEventListenerToCategoryTab() {
     var tabElement = document.querySelector(".event_tab_lst.tab_lst_min");
-    console.log(tabElement);
     tabElement.addEventListener("click", initProductList);
 }
 
@@ -29,6 +28,7 @@ function initProductList(event) {
     clearProductList();
     clearProductCount();
     removeCategoryProperty();
+    showAppendBtn();
     
     addCategoryProperty(event.target);
     setProductListWithEventTarget(event.target);
@@ -75,15 +75,19 @@ async function appendProductItemList() {
     setProductCountWithProduct(productList);
     appendProductItem(productHtml);
 
-    removeAppendBtnIfNeeded();
+    hideAppendBtnIfNeeded();
 }
 
-function removeAppendBtnIfNeeded(){
+function hideAppendBtnIfNeeded(){
     if (isPosibleToAppendProduct()) {
         return;
     }
 
-    document.querySelector(".more .btn").remove();
+    document.querySelector(".more .btn").style.display = 'none';
+}
+
+function showAppendBtn(){
+    document.querySelector(".more .btn").style.display = 'block';
 }
 
 function isPosibleToAppendProduct() {
