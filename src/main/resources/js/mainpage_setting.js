@@ -1,57 +1,49 @@
 const PRODUCT_START_IDX = 0;
 const TOTAL_LIST_CATEGORY_ID = 0;
 
-function initMainPage() {
-    clearCategoryList();
-    setCategoryList();
-
-    clearProductList();
-    setProductListWithCategory(PRODUCT_START_IDX, TOTAL_LIST_CATEGORY_ID);
-
-    setPromotionList();
-
-    addEventListenerToCategoryTab();
-    addEventListenerToAppendProductBtn();
-}
-
-function addEventListenerToCategoryTab() {
-    var tabElement = document.querySelector(".event_tab_lst.tab_lst_min");
-    tabElement.addEventListener("click", initProductList);
-}
-
-function addEventListenerToAppendProductBtn() {
-    var addProductButton = document.querySelector(".more .btn");
-    addProductButton.addEventListener("click", appendProductItemList);
-}
-
-function initProductList(event) {
-    clearProductList();
-    clearProductCount();
-    removeCategoryProperty();
-    showAppendBtn();
+var PageController = {
+    tabElement: null,
+    productAddButton: null,
+    init(){
+        this.setTabElement();
+        this.setproductAddButton();
+        
+        this.addEventListenerToTab();
+        this.addEventListenerToProductAddBtn();
+    },
+    setTabElement(){
+        this.tabElement = document.querySelector(".event_tab_lst.tab_lst_min");
+    },
+    setproductAddButton(){
+        this.productAddButton = document.querySelector(".more .btn");
+    },
+    addEventListenerToTab(){
+        this.tabElement.addEventListener("click", this.processTabEvent);
+    },
+    addEventListenerToProductAddBtn(){
+        this.productAddButton.addEventListener("click", this.appendProductItemList);
+    },
+    processTabEvent(event) {
+        clearProductList();
+        clearProductCount();
+        CategoryTab.deleteProperty();
+        showAppendBtn();
+        
+        CategoryTab.addProperty(event.target);
+        setProductListWithEventTarget(event.target);
+    },
+    async appendProductItemList() {
+        var productList = await getProductList(getCurrentProductCount(), getCurrentCategoryId());
+        var productHtml = makeProductHTML(productList['items']);
     
-    addCategoryProperty(event.target);
-    setProductListWithEventTarget(event.target);
-}
-
-function addCategoryProperty(targetNode){
-    if (targetNode.nodeName === 'LI') {
-        targetNode.firstElementChild.classList.add('active');
-        return;
-    }
-
-    if (targetNode.nodeName === 'A') {
-        targetNode.classList.add('active');
-        return;
-    }
+        setProductCountWithProduct(productList);
+        appendProductItem(productHtml);
     
-    if (targetNode.nodeName === 'SPAN') {
-        targetNode.parentElement.classList.add('active');
-        return;
+        hideAppendBtnIfNeeded();
     }
 }
 
-function setProductListWithEventTarget(targetNode){
+function setProductListWithEventTarget(targetNode) {
     if (targetNode.nodeName === 'LI') {
         setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.dataset.categoryId));
         return;
@@ -61,24 +53,14 @@ function setProductListWithEventTarget(targetNode){
         setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.parentElement.dataset.categoryId));
         return;
     }
-    
+
     if (targetNode.nodeName === 'SPAN') {
         setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.parentElement.parentElement.dataset.categoryId));
         return;
     }
 }
 
-async function appendProductItemList() {
-    var productList = await getProductList(getCurrentProductCount(), getCurrentCategoryId());
-    var productHtml = makeProductHTML(productList['items']);
-
-    setProductCountWithProduct(productList);
-    appendProductItem(productHtml);
-
-    hideAppendBtnIfNeeded();
-}
-
-function hideAppendBtnIfNeeded(){
+function hideAppendBtnIfNeeded() {
     if (isPosibleToAppendProduct()) {
         return;
     }
@@ -86,7 +68,7 @@ function hideAppendBtnIfNeeded(){
     document.querySelector(".more .btn").style.display = 'none';
 }
 
-function showAppendBtn(){
+function showAppendBtn() {
     document.querySelector(".more .btn").style.display = 'block';
 }
 
@@ -108,13 +90,6 @@ function getCurrentCategoryId() {
 
 function getTotalProductCount() {
     return parseInt(document.querySelector(".product_count").dataset.totalProductCount);
-}
-
-async function setCategoryList() {
-    var categoryList = await getCategoryListJson();
-    var categoryHtml = makeCategoryHTMLArray(categoryList['items']);
-
-    setCategoryHTML(categoryHtml);
 }
 
 async function setPromotionList() {
@@ -153,30 +128,6 @@ function getPromotionListJson() {
         httpRequest.open("GET", "/reservation/api/promotions");
         httpRequest.send();
     });
-}
-
-function getCategoryListJson() {
-    return new Promise(function (resolve) {
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.addEventListener("load", () => {
-            resolve(JSON.parse(httpRequest.responseText));
-        });
-        httpRequest.open("GET", "/reservation/api/categories");
-        httpRequest.send();
-    });
-}
-
-
-function setCategoryHTML(categoryHtml) {
-    var targetTab = document.querySelector(".event_tab_lst");
-
-    clearElementHtml(targetTab);
-
-    categoryHtml.forEach((categoryHtml) => {
-        targetTab.innerHTML += categoryHtml;
-    });
-
-    document.querySelector(".anchor").classList.add('active');
 }
 
 function getProductList(start, categoryId) {
@@ -229,22 +180,6 @@ function makePromotionHTMLArray(items) {
     return pmHtmlArray;
 }
 
-function makeCategoryHTMLArray(categoryItems) {
-    var categoryHtml = new Array();
-    var templateHtml = document.querySelector("#categoryItem").innerHTML;
-
-    categoryHtml[0] = templateHtml.replace("${category_id}", 0)
-        .replace("${category_name}", "전체리스트");
-    categoryItems.forEach((item) => {
-        categoryHtml.push(
-            templateHtml.replace("${category_id}", item['id'])
-                .replace("${category_name}", item['name'])
-        );
-    });
-
-    return categoryHtml;
-}
-
 function setProductCountWithProduct(productJson) {
     var productTotalCount = productJson['totalCount'];
     var productCount = productJson['items'].length;
@@ -267,12 +202,6 @@ function appendProductItem(productHtml) {
         }
     });
 
-}
-
-function removeCategoryProperty() {
-    var selectedCategoryAnchor = document.querySelector(".active");
-
-    selectedCategoryAnchor.classList.remove("active");
 }
 
 function clearProductCount() {

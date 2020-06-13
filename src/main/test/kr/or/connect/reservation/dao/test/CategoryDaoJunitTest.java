@@ -9,17 +9,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.or.connect.reservation.config.ApplicationConfig;
-import kr.or.connect.reservation.config.DBConfig;
 import kr.or.connect.reservation.dao.CategoryDao;
 import kr.or.connect.reservation.dto.Category;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { ApplicationConfig.class, DBConfig.class })
+@ContextConfiguration(classes = { ApplicationConfig.class })
 public class CategoryDaoJunitTest {
 
 	@Autowired
@@ -35,10 +33,12 @@ public class CategoryDaoJunitTest {
 		testCategoryList.add(new Category(4, "클래식", 10));
 		testCategoryList.add(new Category(5, "연극", 13));
 
-		List<Category> categoryListFromDao = categoryDao.selectAll();
+		List<Category> acturalCategoryList = categoryDao.selectAll();
 
 		for (int i = 0; i < testCategoryList.size(); i++) {
-			Assert.assertEquals(testCategoryList.get(i).toString(), categoryListFromDao.get(i).toString());
+			Assert.assertEquals(testCategoryList.get(i).getId(), acturalCategoryList.get(i).getId());
+			Assert.assertEquals(testCategoryList.get(i).getCount(), acturalCategoryList.get(i).getCount());
+			Assert.assertEquals(testCategoryList.get(i).getName(), acturalCategoryList.get(i).getName());
 		}
 	}
 
