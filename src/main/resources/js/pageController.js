@@ -18,18 +18,17 @@ var PageController = {
         this.productAddButton = document.querySelector(".more .btn");
     },
     addEventListenerToTab(){
-        this.tabElement.addEventListener("click", this.processTabEvent);
+        this.tabElement.addEventListener("click", this.propagateTabEvent);
     },
     addEventListenerToProductAddBtn(){
         this.productAddButton.addEventListener("click", this.appendProductItemList);
     },
-    processTabEvent(event) {
+    propagateTabEvent(event) {
         clearProductList();
         clearProductCount();
-        CategoryTab.deleteProperty();
         showAppendBtn();
         
-        CategoryTab.addProperty(event.target);
+        CategoryTab.change(event);
         setProductListWithEventTarget(event.target);
     },
     async appendProductItemList() {
@@ -42,6 +41,9 @@ var PageController = {
         hideAppendBtnIfNeeded();
     }
 }
+
+// #######################################################################
+// #######################################################################
 
 function setProductListWithEventTarget(targetNode) {
     if (targetNode.nodeName === 'LI') {

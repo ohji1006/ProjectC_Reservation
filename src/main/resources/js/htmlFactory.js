@@ -1,7 +1,7 @@
 
-var htmlFactory = {
-    async getCategoryHTMLArray() {
-        var categoryItemList = await server.getCategoryList();
+var HtmlFactory = {
+    async getCategoryHTML() {
+        var categoryItemList = await Server.getCategoryList();
 
         console.log(categoryItemList);
 
@@ -19,21 +19,12 @@ var htmlFactory = {
 
         },"");
 
-        // categoryHtml[0] = templateHtml.replace("${category_id}", 0)
-        //     .replace("${category_name}", "전체리스트");
-
-        // categoryItemList['items'].forEach((item) => {
-        //     categoryHtml.push(
-        //         templateHtml.replace("${category_id}", item['id'])
-        //             .replace("${category_name}", item['name'])
-        //     );
-        // });
         console.log(categoryHtml);
         return categoryHtml;
     }
 }
 
-var server = {
+var Server = {
     getCategoryList() {
         return new Promise(function (resolve) {
             var httpRequest = new XMLHttpRequest();

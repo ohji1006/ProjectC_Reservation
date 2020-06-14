@@ -86,7 +86,9 @@
 
     <script type="rv-template" id="categoryItem">
         <li class="item" data-category-id="{{id}}">
-            <a class="anchor"> <span>{{name}}</span> </a>
+            <a class="anchor"> 
+                <span>{{name}}</span>
+            </a>
         </li>
     </script>
 
@@ -142,11 +144,12 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js" integrity="sha256-ZafrO8ZXERYO794Tx1hPaAcdcXNZUNmXufXOSe0Hxj8=" crossorigin="anonymous"></script>
-    <script src="../js/ajax.js"></script>
-    <script src="../js/tab_ui.js"></script>
+
+    <script src="../js/htmlFactory.js"></script>
+    <script src="../js/tab.js"></script>
+    <script src="../js/pageController.js"></script>
     <script src="../js/sliding_animation.js"></script>
-    <script src="../js/mainpage_setting.js"></script>
-    <script src="../js/templateFactory.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             console.log("DomContentLoaded happend");
@@ -154,13 +157,9 @@
             PageController.init();
             CategoryTab.init();
 
-            PageController.addEventListenerToTab();
-
             clearProductList();
             setProductListWithCategory(PRODUCT_START_IDX, TOTAL_LIST_CATEGORY_ID);
-
             setPromotionList();
-
         });
     </script>
 
