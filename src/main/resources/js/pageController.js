@@ -4,44 +4,36 @@ const TOTAL_LIST_CATEGORY_ID = 0;
 var PageController = {
     tabElement: null,
     productAddButton: null,
-    init(){
+    async init() {
         this.setTabElement();
         this.setproductAddButton();
-        
+
         this.addEventListenerToTab();
         this.addEventListenerToProductAddBtn();
     },
-    setTabElement(){
+    setTabElement() {
         this.tabElement = document.querySelector(".event_tab_lst.tab_lst_min");
     },
-    setproductAddButton(){
+    setproductAddButton() {
         this.productAddButton = document.querySelector(".more .btn");
     },
-    addEventListenerToTab(){
-        this.tabElement.addEventListener("click", this.propagateTabEvent);
+    async addEventListenerToTab() {
+        this.tabElement.addEventListener("click", await this.handleTabSelection);
     },
-    addEventListenerToProductAddBtn(){
-        this.productAddButton.addEventListener("click", this.appendProductItemList);
+    async addEventListenerToProductAddBtn() {
+        this.productAddButton.addEventListener("click", await this.handleAddBtnSelection);
     },
-    propagateTabEvent(event) {
-        if (this.isNotEventFromTabElementInside(event.target)) {
+    async handleTabSelection(event) {
+        if (PageController.isNotEventFromTabElementInside(event.target) ) {
             return;
         }
-
-        clearProductList();
-        clearProductCount();
         showAppendBtn();
-        
-        CategoryTab.change(event);
-        setProductListWithEventTarget(event.target);
+
+        Category.moveProperty(event);
+        await Product.setProductItemList();
     },
-    async appendProductItemList() {
-        var productList = await getProductList(getCurrentProductCount(), getCurrentCategoryId());
-        var productHtml = makeProductHTML(productList['items']);
-    
-        setProductCountWithProduct(productList);
-        appendProductItem(productHtml);
-    
+    async handleAddBtnSelection() {
+        await Product.appendProductItemList();
         hideAppendBtnIfNeeded();
     },
     isNotEventFromTabElementInside(targetNode) {
@@ -67,26 +59,6 @@ var PageController = {
     }
 }
 
-// #######################################################################
-// #######################################################################
-
-function setProductListWithEventTarget(targetNode) {
-    if (targetNode.nodeName === 'LI') {
-        setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.dataset.categoryId));
-        return;
-    }
-
-    if (targetNode.nodeName === 'A') {
-        setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.parentElement.dataset.categoryId));
-        return;
-    }
-
-    if (targetNode.nodeName === 'SPAN') {
-        setProductListWithCategory(PRODUCT_START_IDX, parseInt(targetNode.parentElement.parentElement.dataset.categoryId));
-        return;
-    }
-}
-
 function hideAppendBtnIfNeeded() {
     if (isPosibleToAppendProduct()) {
         return;
@@ -100,19 +72,11 @@ function showAppendBtn() {
 }
 
 function isPosibleToAppendProduct() {
-    if (getCurrentProductCount() < getTotalProductCount()) {
+    if (Product.getCount() < Product.getTotalCount()) {
         return true;
     }
+
     return false;
-}
-
-function getCurrentProductCount() {
-    return parseInt(document.querySelector(".product_count").dataset.currentProductCount);
-}
-
-function getCurrentCategoryId() {
-    var activeAnchor = document.querySelector(".active");
-    return parseInt(activeAnchor.parentElement.dataset.categoryId);
 }
 
 function getTotalProductCount() {
@@ -128,15 +92,6 @@ async function setPromotionList() {
     initSlidingPromotionAnimation();
     slidePromtionAnimation();
 }
-
-async function setProductListWithCategory(start, categoryId) {
-    var productList = await getProductList(start, categoryId);
-    var productHtml = makeProductHTML(productList['items']);
-
-    setProductCountWithProduct(productList);
-    appendProductItem(productHtml);
-}
-
 
 function setPromotionHTML(promotionHtml) {
     var slidingUL = document.querySelector(".visual_img");
@@ -205,48 +160,6 @@ function makePromotionHTMLArray(items) {
     });
 
     return pmHtmlArray;
-}
-
-function setProductCountWithProduct(productJson) {
-    var productTotalCount = productJson['totalCount'];
-    var productCount = productJson['items'].length;
-    var productCountElement = document.querySelector(".product_count");
-
-    productCountElement.innerHTML = productTotalCount + "개";
-    productCountElement.dataset.totalProductCount = productTotalCount;
-    productCountElement.dataset.currentProductCount = parseInt(productCountElement.dataset.currentProductCount) + productCount;
-}
-
-function appendProductItem(productHtml) {
-    var itemBoxList = document.querySelectorAll(".lst_event_box");
-
-    productHtml.forEach((productHtml, idx) => {
-        if (idx % 2 === 0) {
-            itemBoxList[0].innerHTML += productHtml;
-        }
-        else {
-            itemBoxList[1].innerHTML += productHtml;
-        }
-    });
-
-}
-
-function clearProductCount() {
-    var productCountElement = document.querySelector(".product_count");
-
-    productCountElement.dataset.totalProductCount = 0;
-    productCountElement.dataset.currentProductCount = 0;
-}
-
-function clearCategoryList() {
-    var category = document.querySelectorAll(".event_tab_lst");
-
-    clearElementHtml(category);
-}
-function clearProductList() {
-    var itemBoxList = document.querySelectorAll(".lst_event_box");
-
-    Array.from(itemBoxList).forEach((itemBox) => { clearElementHtml(itemBox) });
 }
 
 function clearElementHtml(targetElement) {

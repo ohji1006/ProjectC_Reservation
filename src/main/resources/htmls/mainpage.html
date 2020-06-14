@@ -147,18 +147,19 @@
 
     <script src="../js/htmlFactory.js"></script>
     <script src="../js/tab.js"></script>
+    <script src="../js/product.js"></script>
+    
     <script src="../js/pageController.js"></script>
     <script src="../js/sliding_animation.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
             console.log("DomContentLoaded happend");
 
-            PageController.init();
-            CategoryTab.init();
+            await PageController.init();
+            await Category.init();
+            Product.init();
 
-            clearProductList();
-            setProductListWithCategory(PRODUCT_START_IDX, TOTAL_LIST_CATEGORY_ID);
             setPromotionList();
         });
     </script>

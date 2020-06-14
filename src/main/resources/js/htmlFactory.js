@@ -3,8 +3,6 @@ var HtmlFactory = {
     async getCategoryHTML() {
         var categoryItemList = await Server.getCategoryList();
 
-        console.log(categoryItemList);
-
         return this.makeCategoryItemHTML(categoryItemList);
     },
     makeCategoryItemHTML(categoryItemList) {
@@ -13,13 +11,10 @@ var HtmlFactory = {
 
         categoryItemList['items'].unshift({id:0, name:"전체리스트"});
         var categoryHtml = categoryItemList['items'].reduce((prevHTML, item)=>{
-            console.log(item);
-            console.log(prevHTML);
             return prevHTML + catrgoryTemplate(item);
 
         },"");
 
-        console.log(categoryHtml);
         return categoryHtml;
     }
 }

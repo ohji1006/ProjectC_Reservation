@@ -1,4 +1,4 @@
-var CategoryTab = {
+var Category = {
     tabElement: null,
     async init() {
         this.initTabElement();
@@ -11,10 +11,7 @@ var CategoryTab = {
     async setCategory() {
         this.setCategoryHTMLAndProperty(await HtmlFactory.getCategoryHTML());
     },
-    change(event) {
-        this.changePropertySetting(event);
-    },
-    changePropertySetting() {
+    moveProperty(event) {
         this.deleteProperty();
         this.addProperty(event.target);
     },
@@ -40,5 +37,8 @@ var CategoryTab = {
         if (targetNode.nodeName === 'SPAN') {
             return targetNode.parentElement.classList.add('active');
         }
+    },
+    getCurrentCategoryId(){
+        return parseInt(this.tabElement.querySelector(".active").parentElement.dataset.categoryId);
     }
 };
