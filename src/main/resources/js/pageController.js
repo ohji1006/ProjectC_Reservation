@@ -24,6 +24,10 @@ var PageController = {
         this.productAddButton.addEventListener("click", this.appendProductItemList);
     },
     propagateTabEvent(event) {
+        if (this.isNotEventFromTabElementInside(event.target)) {
+            return;
+        }
+
         clearProductList();
         clearProductCount();
         showAppendBtn();
@@ -39,6 +43,27 @@ var PageController = {
         appendProductItem(productHtml);
     
         hideAppendBtnIfNeeded();
+    },
+    isNotEventFromTabElementInside(targetNode) {
+        for (var liIndex = 0; liIndex < this.tabElement.children.length; liIndex++) {
+            var liElement = this.tabElement.children[liIndex];
+            var aElement = liElement.firstElementChild;
+            var spanElement = aElement.firstElementChild;
+
+            if (liElement === targetNode) {
+                return false;
+            }
+
+            if (aElement === targetNode) {
+                return false;
+            }
+
+            if (spanElement === targetNode) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
