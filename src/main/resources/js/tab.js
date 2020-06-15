@@ -1,19 +1,19 @@
 var Category = {
     tabElement: null,
     async init() {
-        this.initTabElement();
-
+        this.setTabElement();
         await this.setCategory();
     },
-    initTabElement() {
+    setTabElement() {
         this.tabElement = document.querySelector(".event_tab_lst.tab_lst_min");
     },
     async setCategory() {
-        this.setCategoryHTMLAndProperty(await HtmlFactory.getCategoryHTML());
+        var categoryItemInfo = await Server.getCategoryList();
+        this.setCategoryHTMLAndProperty(HtmlFactory.makeCategoryItemHTML(categoryItemInfo['items']));
     },
-    moveProperty(event) {
+    movePropertyToTarget(targetNode) {
         this.deleteProperty();
-        this.addProperty(event.target);
+        this.addProperty(targetNode);
     },
     setCategoryHTMLAndProperty(categoryHtml) {
         this.tabElement.innerHTML = categoryHtml;
@@ -38,7 +38,7 @@ var Category = {
             return targetNode.parentElement.classList.add('active');
         }
     },
-    getCurrentCategoryId(){
+    getCurrentCategoryId() {
         return parseInt(this.tabElement.querySelector(".active").parentElement.dataset.categoryId);
     }
 };

@@ -1,6 +1,3 @@
-const PRODUCT_START_IDX = 0;
-const TOTAL_LIST_CATEGORY_ID = 0;
-
 var PageController = {
     tabElement: null,
     productAddButton: null,
@@ -18,23 +15,30 @@ var PageController = {
         this.productAddButton = document.querySelector(".more .btn");
     },
     async addEventListenerToTab() {
-        this.tabElement.addEventListener("click", await this.handleTabSelection);
+        this.tabElement.addEventListener("click", this.handleTabSelection);
     },
     async addEventListenerToProductAddBtn() {
-        this.productAddButton.addEventListener("click", await this.handleAddBtnSelection);
+        this.productAddButton.addEventListener("click", this.handleAddBtnSelection);
     },
     async handleTabSelection(event) {
-        if (PageController.isNotEventFromTabElementInside(event.target) ) {
+        if (PageController.isNotEventFromTabElementInside(event.target)) {
             return;
         }
-        showAppendBtn();
 
-        Category.moveProperty(event);
+        AppendBtn.show();
+        Category.movePropertyToTarget(event.target);
         await Product.setProductItemList();
     },
     async handleAddBtnSelection() {
         await Product.appendProductItemList();
-        hideAppendBtnIfNeeded();
+        PageController.hideAppendBtnIfNeeded();
+    },
+    hideAppendBtnIfNeeded() {
+        if (Product.isPosibleToAppendProduct()) {
+            return;
+        }
+
+        AppendBtn.hide();
     },
     isNotEventFromTabElementInside(targetNode) {
         for (var liIndex = 0; liIndex < this.tabElement.children.length; liIndex++) {
@@ -59,109 +63,18 @@ var PageController = {
     }
 }
 
-function hideAppendBtnIfNeeded() {
-    if (isPosibleToAppendProduct()) {
-        return;
+var AppendBtn = {
+    appendBtnElement: null,
+    init() {
+        this.setBtnElement();
+    },
+    setBtnElement() {
+        this.appendBtnElement = document.querySelector(".more .btn");
+    },
+    show() {
+        this.appendBtnElement.style.display = 'block';
+    },
+    hide() {
+        this.appendBtnElement.style.display = 'none';
     }
-
-    document.querySelector(".more .btn").style.display = 'none';
-}
-
-function showAppendBtn() {
-    document.querySelector(".more .btn").style.display = 'block';
-}
-
-function isPosibleToAppendProduct() {
-    if (Product.getCount() < Product.getTotalCount()) {
-        return true;
-    }
-
-    return false;
-}
-
-function getTotalProductCount() {
-    return parseInt(document.querySelector(".product_count").dataset.totalProductCount);
-}
-
-async function setPromotionList() {
-    var promotion = await getPromotionListJson();
-    var promotionHtml = makePromotionHTMLArray(promotion['items']);
-
-    setPromotionHTML(promotionHtml);
-
-    initSlidingPromotionAnimation();
-    slidePromtionAnimation();
-}
-
-function setPromotionHTML(promotionHtml) {
-    var slidingUL = document.querySelector(".visual_img");
-
-    promotionHtml.forEach((promotionHTML) => {
-        slidingUL.innerHTML += promotionHTML;
-    });
-}
-
-function getPromotionListJson() {
-    return new Promise((resolve) => {
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.addEventListener("load", () => {
-            resolve(JSON.parse(httpRequest.responseText));
-        });
-        httpRequest.open("GET", "/reservation/api/promotions");
-        httpRequest.send();
-    });
-}
-
-function getProductList(start, categoryId) {
-    var requestURL = makeProductRequestURL(start, categoryId);
-
-    return new Promise(function (resolve, reject) {
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.addEventListener("load", () => {
-            resolve(JSON.parse(httpRequest.responseText));
-        });
-        httpRequest.open("GET", requestURL);
-        httpRequest.send();
-    });
-}
-
-function makeProductRequestURL(start, categoryId) {
-    if (categoryId == TOTAL_LIST_CATEGORY_ID) {
-        return `/reservation/api/products?start=${start}`;
-    }
-    return `/reservation/api/products?categoryId=${categoryId}&start=${start}`;
-}
-
-function makeProductHTML(items) {
-    var templateHtml = document.querySelector("#itemList").innerHTML;
-    var productHtml = new Array();
-
-    items.forEach((item, index) => {
-        productHtml[index] = templateHtml.replace("${productId}", item['productId'])
-            .replace("${productDescription}", item['productDescription'])
-            .replace("${productImageUrl}", item['productImageUrl'])
-            .replace("${productDescription}", item['productDescription'])
-            .replace("${placeName}", item['placeName'])
-            .replace("${productContent}", item['productContent']);
-    });
-
-    return productHtml;
-}
-
-function makePromotionHTMLArray(items) {
-    var pmHtmlArray = new Array();
-    var templateHtml = document.querySelector("#promotionItem").innerHTML;
-
-    items.forEach((promotionItem) => {
-        pmHtmlArray.push(
-            templateHtml.replace('${productId}', promotionItem['productId'])
-                .replace('${productImageUrl}', promotionItem['productImageUrl'])
-        );
-    });
-
-    return pmHtmlArray;
-}
-
-function clearElementHtml(targetElement) {
-    targetElement.innerHTML = "";
 }

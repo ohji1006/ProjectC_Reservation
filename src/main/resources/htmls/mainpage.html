@@ -111,7 +111,7 @@
     </script>
 
     <script type="rv-template" id="promotionItem">
-    <li class="item" id="${productId}" style="background-image: url(http://localhost:8080/reservation/${productImageUrl}/);">
+    <li class="item" id="{{productId}}" style="background-image: url(http://localhost:8080/reservation/{{productImageUrl}}/);">
         <a href="#">
             <span class="img_btm_border"></span>
             <span class="img_right_border"></span>
@@ -127,17 +127,17 @@
 
     <script type="rv-template" id="itemList">
         <li class="item">
-            <a href="detail.html?id=${productId}" class="item_book">
+            <a href="detail.html?id={{productId}}" class="item_book">
                 <div class="item_preview">
-                    <img alt="${productDescription}" class="img_thumb" src="http://localhost:8080/reservation/${productImageUrl}">
+                    <img alt="{{productDescription}}" class="img_thumb" src="http://localhost:8080/reservation/{{productImageUrl}}">
                     <span class="img_border"></span>
                 </div>
                 <div class="event_txt">
                     <h4 class="event_txt_tit"> 
-                        <span>${productDescription}</span>
-                        <small class="sm">${placeName}</small>
+                        <span>{{productDescription}}</span>
+                        <small class="sm">{{placeName}}</small>
                     </h4>
-                    <p class="event_txt_dsc">${productContent}</p>
+                    <p class="event_txt_dsc">{{productContent}}</p>
                 </div>
             </a>
         </li>
@@ -148,9 +148,8 @@
     <script src="../js/htmlFactory.js"></script>
     <script src="../js/tab.js"></script>
     <script src="../js/product.js"></script>
-    
+    <script src="../js/promotion.js"></script>
     <script src="../js/pageController.js"></script>
-    <script src="../js/sliding_animation.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
@@ -158,9 +157,9 @@
 
             await PageController.init();
             await Category.init();
-            Product.init();
-
-            setPromotionList();
+            await Product.init();
+            await Promotion.init();
+            AppendBtn.init();
         });
     </script>
 
