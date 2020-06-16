@@ -21,16 +21,10 @@ public class ProductApiController {
 	private ProductService productService;
 
 	private long getProductCount(long categoryId) {
-		if (categoryId == 0) {
-			return productService.getProductCount();
-		}
 		return productService.getProductCountAtCategory(categoryId);
 	}
 
 	private List<Product> getProductList(long categoryId, long start) {
-		if (categoryId == 0) {
-			return productService.getProductList(start);
-		}
 		return productService.getProductListAtCategory(categoryId, start);
 	}
 
