@@ -9,7 +9,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <style>
         .container_visual {
-            height: 414px;
+            height: 414px;  
         }
     </style>
 </head>
@@ -44,40 +44,8 @@
                     </div>
                     <div class="group_visual">
                         <div>
-                            <div class="container_visual" style="width: 414px;">
-                                <ul class="visual_img detail_swipe">
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item" style="width: 414px;"> <img alt="" class="img_thumb" src=""> <span class="img_bg"></span>
-                                        <div class="visual_txt">
-                                            <div class="visual_txt_inn">
-                                                <h2 class="visual_txt_tit"> <span></span> </h2>
-                                                <p class="visual_txt_dsc"></p>
-                                            </div>
-                                        </div>
-                                    </li>
+                            <div class="container_visual">
+                                <ul class="visual_img detail_swipe container_visual">
                                 </ul>
                             </div>
                             <div class="prev">
@@ -97,6 +65,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="group_btn_goto"  style="display: none;">
                         <a class="btn_goto_home" title="홈페이지" href="#" target="siteUrl"> <i class="fn fn-home1"></i> </a>
                         <a class="btn_goto_tel" title="전화" href="#"> <i class="fn fn-call1"></i> </a>
@@ -259,6 +228,36 @@
         </div>
     </footer>
     <div id="photoviwer"></div>
+
+    <script type="rv-template" id="visualItem">
+        {{#each productImages}}
+        <li class="item container_visual">
+            <img alt="" class="img_thumb container_visual" src="http://localhost:8080/reservation/{{saveFileName}}">
+            <span class="img_bg">aa</span>
+            <div class="visual_txt">
+                <div class="visual_txt_inn">
+                    <h2 class="visual_txt_tit">
+                        <span>{{../displayInfo.productDescription}}</span>
+                    </h2>
+                    <p class="visual_txt_dsc"></p>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js" integrity="sha256-ZafrO8ZXERYO794Tx1hPaAcdcXNZUNmXufXOSe0Hxj8=" crossorigin="anonymous"></script>
+    <script src="../js/detail/htmlFactory.js"></script>
+    <script src="../js/detail/productView.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async() =>{
+            // PageBuilder.init();
+            await PageBuilder.build(document.location.search.split("=")[1]);
+            
+        });
+    </script>
+
 </body>
 
 

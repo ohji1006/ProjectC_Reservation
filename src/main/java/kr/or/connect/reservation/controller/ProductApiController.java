@@ -38,7 +38,7 @@ public class ProductApiController {
 	public Map<String, Object> getDisplayInfo(@PathVariable Long displayInfoId) {
 		Map<String, Object> map = new HashMap<>();
 
-		map.put("displayInfoId", displayInfoService.getDisplayInfo(displayInfoId));
+		map.put("displayInfo", displayInfoService.getDisplayInfo(displayInfoId));
 		map.put("productImages", displayInfoService.getProductImageList(displayInfoId));
 		map.put("displayInfoImage", displayInfoService.getdisplayInfoImage(displayInfoId));
 		map.put("comments", displayInfoService.getCommentList(displayInfoId));
