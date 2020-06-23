@@ -15,9 +15,9 @@ public class PromotionServiceImplTest {
 	public static void main(String[] args) {
 		ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationConfig.class);
 		PromotionService promotionService = ac.getBean(PromotionService.class);
-		List<Promotion> promotionList =  promotionService.getPromotionList();
-		
-		for(Promotion promotion : promotionList) {
+		List<Promotion> promotionList = promotionService.getPromotionList();
+
+		for (Promotion promotion : promotionList) {
 			System.out.println(promotion.toString());
 		}
 	}

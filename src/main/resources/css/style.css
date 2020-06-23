@@ -1290,6 +1290,7 @@ button {
     white-space: normal;
     vertical-align: top;
     pointer-events: none;
+    width: 100%;
 }
 
 .group_visual .visual_img .item .img_bg:before,.group_visual .visual_img .item .visual_txt {

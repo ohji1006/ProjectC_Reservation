@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.dao;
+package kr.or.connect.reservation.sql;
 
 public class PromotionSql {
 	public final static String SELECT_ALL = "select pm.id, pd.id as product_id, fi.save_file_name as product_image_url from promotion as pm " + 

@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.dao;
+package kr.or.connect.reservation.sql;
 
 public class CategorySql {
 	public final static String SELECT_ALL_WITH_COUNT = 
