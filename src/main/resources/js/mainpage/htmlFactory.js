@@ -34,6 +34,7 @@ var HtmlFactory = {
 }
 
 var Server = {
+    TOTAL_LIST_CATEGORY_ID: 0,
     getCategoryList() {
         return new Promise(function (resolve) {
             var httpRequest = new XMLHttpRequest();
@@ -67,7 +68,7 @@ var Server = {
         });
     },
     makeProductRequestURL(start, categoryId) {
-        if (categoryId == TOTAL_LIST_CATEGORY_ID) {
+        if (categoryId == this.TOTAL_LIST_CATEGORY_ID) {
             return `/reservation/api/products?start=${start}`;
         }
         return `/reservation/api/products?categoryId=${categoryId}&start=${start}`;
