@@ -17,7 +17,7 @@ var UserComment = {
         this.setReviewBtn();
     },
     buildPage(displayInfo) {
-        this.setReviewAhr(displayInfo['displayInfo']['categoryId']);
+        this.setReviewAhr(displayInfo['displayInfo']['productId']);
         this.setReviewList(displayInfo);
         this.setCount(displayInfo['comments'].length);
         this.setScore(displayInfo['averageScore']);
@@ -38,8 +38,8 @@ var UserComment = {
     setValueGraphElm() {
         this.valueGraphElm = document.querySelector(".graph_value");
     },
-    setReviewAhr(categoryId) {
-        this.reviewBtn.setAttribute('href', `./review.html?id=${categoryId}`);
+    setReviewAhr(productId) {
+        this.reviewBtn.setAttribute('href', `./review.html?id=${productId}`);
     },
     setGraph(persent) {
         this.valueGraphElm.style.width = `${persent}%`;

@@ -17,7 +17,7 @@ var UserComment = {
         this.setBackBtnElm();
     },
     buildPage(displayInfo) {
-        this.setBackBtnAhr(displayInfo['displayInfo']['categoryId']);
+        this.setBackBtnAhr(displayInfo['displayInfo']['productId']);
         this.setReviewList(displayInfo);
         this.setCount(displayInfo['comments'].length);
         this.setScore(displayInfo['averageScore']);
@@ -38,8 +38,8 @@ var UserComment = {
     setBackBtnElm() {
         this.backBtn = document.querySelector(".btn_back");
     },
-    setBackBtnAhr(categoryId) {
-        this.backBtn.setAttribute('href', `./detail.html?id=${categoryId}`);
+    setBackBtnAhr(productId) {
+        this.backBtn.setAttribute('href', `./detail.html?id=${productId}`);
     },
     setGraph(persent) {
         this.valueGraphElm.style.width = `${persent}%`;
