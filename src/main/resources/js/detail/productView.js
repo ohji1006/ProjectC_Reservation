@@ -173,7 +173,7 @@ var ProductView = {
         this.applyTransrateValue();
         this.updateEndIdxWhenRightMove();
     },
-    moveLeftAnimation() {w
+    moveLeftAnimation() {
         this.updateTransrateWhenLeftMove();
         this.updateItemOpacity(this.leftEndIdx);
         this.applyTransrateValue();
