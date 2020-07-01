@@ -15,7 +15,7 @@ public interface DisplayInfoService {
 
 	public List<ProductImage> getProductImageList(long displayInfoId);
 
-	public DisplayInfoImage getdisplayInfoImage(long displayInfoId);
+	public DisplayInfoImage getDisplayInfoImage(long displayInfoId);
 
 	public List<Comment> getCommentList(long displayInfoId);
 

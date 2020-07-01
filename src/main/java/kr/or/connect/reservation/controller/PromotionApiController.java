@@ -21,7 +21,7 @@ public class PromotionApiController {
 
 	@GetMapping
 	public Map<String, Object> promotionItems() {
-		Map<String, Object> itemMap = new HashMap<String, Object>();
+		Map<String, Object> itemMap = new HashMap<>();
 		itemMap.put("items", promotionService.getPromotionList());
 
 		return itemMap;
