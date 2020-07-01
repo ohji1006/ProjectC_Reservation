@@ -14,7 +14,7 @@ public class DisplayInfoSql {
 			"join product as pd on pd.id = di.product_id " + 
 			"join product_image as pi on pi.product_id = pd.id " + 
 			"join file_info as fi on fi.id = pi.file_id " + 
-			"where di.id = :displayInfoId and (type = 'ma' or type = 'et') " +
+			"where di.id = :displayInfoId and type in ('ma', 'et') " +
 			"limit :limit";
 	
 	public final static String SELECT_DISPLAY_INFO_IMAGE = 
