@@ -31,7 +31,7 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	}
 
 	@Override
-	public DisplayInfoImage getdisplayInfoImage(long displayInfoId) {
+	public DisplayInfoImage getDisplayInfoImage(long displayInfoId) {
 		return displayInfoDao.selectDisplayInfoImage(displayInfoId);
 	}
 
