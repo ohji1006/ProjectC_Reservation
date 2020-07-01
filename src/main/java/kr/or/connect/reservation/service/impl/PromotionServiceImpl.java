@@ -19,5 +19,4 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<Promotion> getPromotionList() {
 		return promotionDao.selectAll();
 	}
-
 }

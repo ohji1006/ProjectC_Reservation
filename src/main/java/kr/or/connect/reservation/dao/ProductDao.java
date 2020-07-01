@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.sql.ProductSql.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,8 +15,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.Product;
-
-import static kr.or.connect.reservation.dao.ProductSql.*;
 
 @Repository
 public class ProductDao {
