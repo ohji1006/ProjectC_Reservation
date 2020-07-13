@@ -7,7 +7,7 @@ public class Product {
 	private String placeName;
 	private String productContent;
 	private String productImageUrl;
-	
+
 	public Product() {
 		super();
 	}

@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.dao;
+package kr.or.connect.reservation.sql;
 
 public class ProductSql {
 	public static final String SELECT_COUNT = 

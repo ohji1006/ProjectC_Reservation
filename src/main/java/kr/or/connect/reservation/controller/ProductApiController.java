@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.Product;
+import kr.or.connect.reservation.service.DisplayInfoService;
 import kr.or.connect.reservation.service.ProductService;
 
 @RestController
@@ -19,35 +20,31 @@ import kr.or.connect.reservation.service.ProductService;
 public class ProductApiController {
 	@Autowired
 	private ProductService productService;
-
-	private long getProductCount(long categoryId) {
-		if (categoryId == 0) {
-			return productService.getProductCount();
-		}
-		return productService.getProductCountAtCategory(categoryId);
-	}
-
-	private List<Product> getProductList(long categoryId, long start) {
-		if (categoryId == 0) {
-			return productService.getProductList(start);
-		}
-		return productService.getProductListAtCategory(categoryId, start);
-	}
+	@Autowired
+	private DisplayInfoService displayInfoService;
 
 	@GetMapping
 	public Map<String, Object> getProduct(@RequestParam(defaultValue = "0") long categoryId,
 			@RequestParam(defaultValue = "0") long start) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("totalCount", getProductCount(categoryId));
-		map.put("items", getProductList(categoryId, start));
+
+		map.put("totalCount", productService.getProductCountAtCategory(categoryId));
+		map.put("items", productService.getProductListAtCategory(categoryId, start));
+
 		return map;
 	}
 
 	@GetMapping(path = "/{displayInfoId}")
-	public Map<String, Object> testDisplayInfoId(@PathVariable long displayInfoId) {
+	public Map<String, Object> getDisplayInfo(@PathVariable Long displayInfoId) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("displayInfoId", displayInfoId);
 
-		return null;
+		map.put("displayInfo", displayInfoService.getDisplayInfo(displayInfoId));
+		map.put("productImages", displayInfoService.getProductImageList(displayInfoId));
+		map.put("displayInfoImage", displayInfoService.getdisplayInfoImage(displayInfoId));
+		map.put("comments", displayInfoService.getCommentList(displayInfoId));
+		map.put("averageScore", displayInfoService.getAverageScore(displayInfoId));
+		map.put("productPrices", displayInfoService.getProductPriceList(displayInfoId));
+
+		return map;
 	}
 }

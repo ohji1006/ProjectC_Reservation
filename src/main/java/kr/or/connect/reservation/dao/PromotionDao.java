@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.sql.PromotionSql.SELECT_ALL;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +14,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.Promotion;
-
-import static kr.or.connect.reservation.dao.PromotionSql.SELECT_ALL;
 
 @Repository
 public class PromotionDao {
