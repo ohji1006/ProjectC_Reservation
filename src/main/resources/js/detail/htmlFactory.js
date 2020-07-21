@@ -47,6 +47,7 @@ var PageController = {
     dscFoldBtn: null,
     detailItemElm: null,
     detailAreaElm: null,
+    reservationBtnElm:null,
     init() {
         this.setElement();
         this.addListener();
@@ -58,6 +59,7 @@ var PageController = {
         this.setDscFoldBtnElm();
         this.setDetailItemElm();
         this.setDetailAreaElm();
+        this.setReservationBtnElm()
     },
     addListener() {
         this.addEventListenerToMoveBtn();
@@ -65,6 +67,10 @@ var PageController = {
         this.addEventListenerToDscFoldBtn();
         this.addEventListenerToDetailItemElm();
         this.addEventListenerToDetailAreaElm();
+        this.addEventListenerToReservationBtn();
+    },
+    setReservationBtnElm(){
+        this.reservationBtnElm = document.querySelector(".bk_btn");
     },
     setPrevBtnElm() {
         this.prevBtn = document.querySelector(".prev");
@@ -100,7 +106,12 @@ var PageController = {
     addEventListenerToDetailAreaElm() {
         this.detailAreaElm.addEventListener("click", this.handleDetailAreaSelection);
     },
-
+    addEventListenerToReservationBtn(){
+        this.reservationBtnElm.addEventListener("click",this.handleMoveToReservationPage);
+    },
+    handleMoveToReservationPage(){
+        location.href = location.href.substr(0,location.href.indexOf("detail.html")) +'reserve.html?id=' + location.search.split('=')[1]
+    },
     handleMoveBtnSelection(event) {
         ProductView.moveAnimation(event.currentTarget);
     },

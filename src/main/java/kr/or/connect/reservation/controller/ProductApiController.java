@@ -40,7 +40,7 @@ public class ProductApiController {
 
 		map.put("displayInfo", displayInfoService.getDisplayInfo(displayInfoId));
 		map.put("productImages", displayInfoService.getProductImageList(displayInfoId));
-		map.put("displayInfoImage", displayInfoService.getdisplayInfoImage(displayInfoId));
+		map.put("displayInfoImage", displayInfoService.getDisplayInfoImage(displayInfoId));
 		map.put("comments", displayInfoService.getCommentList(displayInfoId));
 		map.put("averageScore", displayInfoService.getAverageScore(displayInfoId));
 		map.put("productPrices", displayInfoService.getProductPriceList(displayInfoId));
