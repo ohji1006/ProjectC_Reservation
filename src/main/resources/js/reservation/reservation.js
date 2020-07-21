@@ -145,7 +145,7 @@ class Reservation {
 
         this.incTotlaCount();
 
-        this.togglePriceColor();
+        this.togglePriceColor(ticketDiv);
         this.toggleDcsBtn(ticketDiv);
         this.toggleReserveBtn();
     }
@@ -182,7 +182,7 @@ class Reservation {
         this.setTicketSum(ticketInput, totalPriceDiv);
         this.decTotalCount();
 
-        this.togglePriceColor();
+        this.togglePriceColor(ticketDiv);
         this.toggleDcsBtn(ticketDiv);
         this.toggleReserveBtn();
     }
@@ -203,11 +203,11 @@ class Reservation {
         totalCount.innerHTML = parseInt(totalCount.innerHTML) - 1;
     }
 
-    togglePriceColor(){
-        let countInput = document.querySelector('.count_control_input');
-        let priceDiv = document.querySelector('.individual_price');
+    togglePriceColor(ticketDiv) {
+        let ticketInput = ticketDiv.querySelector('.count_control_input');
+        let priceDiv = ticketDiv.querySelector('.individual_price');
 
-        if (this.isInputQuntityLeft(countInput)) {
+        if (this.isInputQuntityLeft(ticketInput)) {
             priceDiv.classList.add('on_color');
             return;
         }
@@ -348,27 +348,53 @@ class Reservation {
     createData() {
         let data = {};
         data['displayInfoId'] = this.productInfo['displayInfo']['displayInfoId'];
+        data['prices'] = this.getTicketData();
+        data['productId'] = this.productInfo['displayInfo']['productId'];
+        data['reservationName'] = document.querySelector('#name').value;
+        data['reservationTel'] = document.querySelector('#tel').value;
+        data['reservationEmail'] = document.querySelector('#email').value;
+        data['reservationYearMonthDay'] = this.getMonthData();
 
-        data['prices'] = new Array();
+        return data;
+    }
+
+    getTicketData() {
+        let ticketData = new Array();;
         let qtyDivList = document.querySelectorAll('.qty');
         Array.from(qtyDivList).forEach((qtyDiv) => {
             let qty = parseInt(qtyDiv.querySelector('.count_control_input').value);
             let productPriceId = parseInt(qtyDiv.querySelector('.count_control_input').dataset.productPriceId);
-            data.prices.push({
+
+            if (qty === 0) {
+                return;
+            }
+
+            ticketData.push({
                 "count": qty,
                 "productPriceId": productPriceId,
                 "reservationInfoId": 0,
                 "reservationInfoPriceId": 0
             });
         });
-        data['productId'] = this.productInfo['displayInfo']['productId'];
-        data['reservationName'] = document.querySelector('#name').value;
-        data['reservationTel'] = document.querySelector('#tel').value;
-        data['reservationEmail'] = document.querySelector('#email').value;
 
-        let dateIns = new Date();
-        dateIns.getFullYear().toString() + "." + dateIns.getMonth().toString() + "." + dateIns.getDate().toString();
-        data['reservationYearMonthDay'] = dateIns.getFullYear().toString() + "." + dateIns.getMonth().toString() + "." + dateIns.getDate().toString();
+        return ticketData;
     }
 
+    getMonthData() {
+        let dateIns = new Date();
+        let dateString = null;
+        let year = dateIns.getFullYear();
+        let month = (dateIns.getMonth() + 1);
+        let day = dateIns.getDate();
+
+        dateString = year.toString();
+        if (month.toString().length < 2) {
+            dateString += ".0" + month.toString();
+        } else {
+            dateString += "." + month.toString();
+        }
+        dateString += "." + day.toString();
+
+        return dateString;
+    }
 }
