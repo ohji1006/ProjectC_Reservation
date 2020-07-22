@@ -17,7 +17,7 @@ class Reservation {
     }
 
     static get RSVURL() {
-        return `/reservation/api/reservations`;
+        return `/reservation/api/reservations/`;
     }
 
     async setTiketElm() {
@@ -348,12 +348,12 @@ class Reservation {
     createData() {
         let data = {};
         data['displayInfoId'] = this.productInfo['displayInfo']['displayInfoId'];
-        data['prices'] = this.getTicketData();
         data['productId'] = this.productInfo['displayInfo']['productId'];
-        data['reservationName'] = document.querySelector('#name').value;
-        data['reservationTel'] = document.querySelector('#tel').value;
         data['reservationEmail'] = document.querySelector('#email').value;
+        data['reservationName'] = document.querySelector('#name').value;
+        data['reservationTelephone'] = document.querySelector('#tel').value;
         data['reservationYearMonthDay'] = this.getMonthData();
+        data['prices'] = this.getTicketData();
 
         return data;
     }
