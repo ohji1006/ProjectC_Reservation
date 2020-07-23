@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import kr.or.connect.reservation.objmapper.RsvDateDeserializer;
 import kr.or.connect.reservation.objmapper.RsvDateSerializer;
 
-public class Reservation {
+public class ReservationRequest {
 
 	private long reservationInfoId;
 	private long productId;
@@ -28,10 +28,10 @@ public class Reservation {
 	private Date modifyDate;
 	private List<Price> prices;
 
-	public Reservation() {
+	public ReservationRequest() {
 	}
 
-	public Reservation(long reservationInfoId, long productId, long displayInfoId, String reservationName,
+	public ReservationRequest(long reservationInfoId, long productId, long displayInfoId, String reservationName,
 			String reservationTel, String reservationEmail, Date reservationDate, Boolean cancelFlag, Date createDate,
 			Date modifyDate, List<Price> prices) {
 		super();
@@ -142,7 +142,7 @@ public class Reservation {
 
 	@Override
 	public String toString() {
-		return "Reservation [reservationInfoId=" + reservationInfoId + ", productId=" + productId + ", displayInfoId="
+		return "ReservationRequest [reservationInfoId=" + reservationInfoId + ", productId=" + productId + ", displayInfoId="
 				+ displayInfoId + ", reservationName=" + reservationName + ", reservationTel=" + reservationTel
 				+ ", reservationEmail=" + reservationEmail + ", reservationDate=" + reservationDate + ", cancelFlag="
 				+ cancelFlag + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", prices=" + prices + "]";
